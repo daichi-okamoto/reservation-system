@@ -1,39 +1,37 @@
 <?php
-class Database {
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
-    private $conn;
+// database.php
+$config = require __DIR__ . '/config.php';
+
+try {
+    // デバッグ情報を出力
+    error_log("接続情報: " . print_r([
+        'host' => $config['database']['host'],
+        'dbname' => $config['database']['name'],
+        'user' => $config['database']['user']
+    ], true));
+
+    $dsn = sprintf('mysql:host=%s;dbname=%s;charset=utf8mb4',
+        $config['database']['host'],
+        $config['database']['name']
+    );
     
-    public function __construct() {
-        // 設定ファイルの読み込み
-        $config = require_once __DIR__ . '/config.php';
-        
-        $this->host = $config['database']['host'];
-        $this->db_name = $config['database']['name'];
-        $this->username = $config['database']['user'];
-        $this->password = $config['database']['pass'];
-    }
-    
-    public function getConnection() {
-        $this->conn = null;
-        
-        try {
-            $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4";
-            $options = [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ];
-            
-            $this->conn = new PDO($dsn, $this->username, $this->password, $options);
-            
-        } catch(PDOException $e) {
-            error_log("Database Connection Error: " . $e->getMessage());
-            throw new Exception("データベースへの接続に失敗しました。");
-        }
-        
-        return $this->conn;
-    }
+    $db = new PDO(
+        $dsn,
+        $config['database']['user'],
+        $config['database']['pass'],
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'
+        ]
+    );
+
+    // 接続成功のログ
+    error_log("データベース接続成功");
+
+} catch (PDOException $e) {
+    // 詳細なエラー情報をログに記録
+    error_log("データベース接続エラー: " . $e->getMessage());
+    error_log("DSN: " . $dsn);
+    exit('データベース接続に失敗しました。');
 }

@@ -1,0 +1,14 @@
+{
+    "name": "server-apache/reservation",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "^6.0",
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Auth\\": "src/Auth/",
+            "Models\\": "src/Models/"
+        }
+    }
+}
