@@ -138,4 +138,8 @@ switch (true) {
         http_response_code(404);
         echo json_encode(['error' => '404 Not Found']);
         break;
-}
+    // ダッシュボード画面を表示
+    case $route === '/dashboard' && $request_method === 'GET':
+        require_once __DIR__ . '/../views/dashboard.php';
+        break;
+    }

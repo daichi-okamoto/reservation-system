@@ -1,8 +1,12 @@
 RewriteEngine On
 
+# 静的リソース (例: JS, CSS, 画像) を除外
+RewriteCond %{REQUEST_URI} \.(js|css|png|jpg|jpeg|gif|ico)$ [NC]
+RewriteRule ^ - [L]
+
 # 実際のファイルまたはディレクトリが存在する場合は、それを使用
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# すべてのリクエストをindex.phpにリダイレクト
+# すべてのリクエストを index.php にリダイレクト
 RewriteRule ^ index.php [QSA,L]

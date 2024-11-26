@@ -1,0 +1,70 @@
+/* 曜日ヘッダー: 週間表示 (8列) */
+.calendar-weekly {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* 左に時間ラベル (100px) + 各曜日 */
+  background-color: orange;
+}
+
+/* 曜日ヘッダー */
+.calendar-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7等分で均等に配置 */
+  background-color: orange;
+}
+
+/* カレンダーのセル */
+.calendar-grid-monthly {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7等分で均等に配置 */
+}
+
+// 週間カレンダー表示
+.calendar-grid-weekly {
+  display: grid;
+  grid-template-columns:100px repeat(7, 1fr); 
+}
+
+.calendar-cell,
+.calendar-day-header {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.calendar-cell.empty {
+  background-color: #f0f0f0;
+}
+
+.today {
+  background-color: green;
+}
+
+/* 時間行全体のスタイル */
+.time-row {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* 左に時間ラベル (100px) + 各曜日のセル */
+  border-bottom: 1px solid #ddd;
+}
+
+/* 時間ラベルのスタイル */
+.time-label {
+  background-color: #f8f8f8;
+  text-align: right;
+  padding: 5px;
+  font-weight: bold;
+  border-right: 1px solid #ddd;
+}
+
+/* 各時間セルのスタイル */
+.time-cell {
+  padding: 5px;
+  text-align: center;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+.time-cell:hover {
+  background-color: #e0f7fa; /* ホバー時の背景色 */
+  cursor: pointer;
+}
